@@ -584,7 +584,7 @@ class Sonus
             }
 
             // Publish progress to this ID
-            $cmd = $cmd.' 1>"'.$tmpdir.$progress.'.sonustmp" 2>&1';
+            $cmd = $cmd.' 1>"'.$tmpdir.$progress.'.sonustmp" > /dev/null 2>&1 < /dev/null';
 
             // Execute command
             return shell_exec($cmd);
