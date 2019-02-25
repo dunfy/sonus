@@ -25,10 +25,10 @@ class SonusServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['sonus'] = $this->app->singleton(function($app)
-        {
-            return new Sonus;
-        });
+		$this->app->singleton('sonus', function($app)
+        	{
+            		return new Sonus;
+		});
 	}
 
 }
