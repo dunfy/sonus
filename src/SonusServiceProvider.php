@@ -25,7 +25,7 @@ class SonusServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['sonus'] = $this->app->share(function($app)
+		$this->app['sonus'] = $this->app->singleton(function($app)
         {
             return new Sonus;
         });
