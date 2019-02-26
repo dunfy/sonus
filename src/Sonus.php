@@ -313,6 +313,11 @@ class Sonus
         return true;
     }
 
+    /**
+     * pre args 
+     * @var array
+     */
+    protected $preargs = array();
 
     /**
      * Input files
@@ -364,6 +369,19 @@ class Sonus
             $this->progress = $var;
             return $this;
         }
+    }
+
+    public function preargs($var)
+    {
+        // Value must be text
+        if (!is_string($var))
+        {
+            return false;
+        }
+
+        $this->preargs[] = $var;
+
+        return $this;
     }
 
     /**
@@ -560,12 +578,14 @@ class Sonus
             $arg = implode(' ', $this->parameters);
         }
 
+        $preargs = implode(' ', $this->preargs);
+
         // Return input and output files
         $input  = implode(' ', $this->input);
         $output = implode(' ', $this->output);
 
         // Prepare the command
-        $cmd = escapeshellcmd($ffmpeg.' -y '.$input.' '.$arg.' '.$output);
+        $cmd = escapeshellcmd($ffmpeg.' -y '.$prearg.' '.$input.' '.$arg.' '.$output);
 
         // Check if progress reporting is enabled
         if (config('sonus.progress') === true) 
@@ -585,6 +605,10 @@ class Sonus
 
             // Publish progress to this ID
             $cmd = $cmd.' 1>"'.$tmpdir.$progress.'.sonustmp" 2>&1';
+
+            \Log::info($cmd);
+            error_log($cmd);
+
 
             // Execute command
             return shell_exec($cmd);
