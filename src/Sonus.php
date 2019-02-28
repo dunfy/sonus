@@ -584,8 +584,8 @@ class Sonus
         $input  = implode(' ', $this->input);
         $output = implode(' ', $this->output);
 
-        // Prepare the command
-        $cmd = escapeshellcmd($ffmpeg.' -y '.$preargs.' '.$input.' '.$arg.' '.$output);
+        $args = escapeshellarg(' -y '.$preargs.' '.$input.' '.$arg.' '.$output);
+        $cmd = $ffmpeg.$args;
 
         // Check if progress reporting is enabled
         if (config('sonus.progress') === true) 
